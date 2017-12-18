@@ -1,3 +1,21 @@
-// Place all the styles related to the site controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.site-index .homepage-house-container {
+  overflow:hidden;
+  height: 450px;
+}
+
+.site-index #homepage-house {
+  position: relative;
+  bottom: 255px;
+
+  @media (max-width: 992px) { 
+    bottom: 152px;
+  }
+}
+
+.site-index #owner-image {
+  width: 250px;
+}
+
+.site-index #owner-discription {
+  font-size: 18px;
+}
