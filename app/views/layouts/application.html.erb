@@ -7,32 +7,8 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body>
-    <nav id="primary-nav" class="navbar navbar-dark bg-primary navbar-expand-sm">
-      <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!-- TODO: Logo? Possibl Nothing-->
-      <%= link_to 'Brokers of Real Estate', root_path, class: 'navbar-brand' %>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto mr-5">
-          <li class="nav-item">
-            <%= nav_link "Home", root_path %>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Houses for Sale</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact Us</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
+  <body class="<%= "#{controller_name}-#{action_name}" %>">
+    <%= render 'layouts/nav_bar' %>
     <%= yield %>
   </body>
 </html>
