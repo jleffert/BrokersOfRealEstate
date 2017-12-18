@@ -1,9 +1,7 @@
 /*
- * Searchs through lib/assets/stylesheets
- * Any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
  *= require_tree .
  *= require_self
  */
 
- @import "bootstrap"
+ @import "bootstrap";
+ @import "layouts/front";
