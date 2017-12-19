@@ -1,6 +1,6 @@
 .site-index .homepage-house-container {
   overflow:hidden;
-  height: 450px;
+  height: 400px;
 }
 
 .site-index #homepage-house {
@@ -12,10 +12,16 @@
   }
 }
 
-.site-index #owner-image {
-  width: 250px;
+@media (max-width: 992px) { 
+  #quick-action a.btn {
+    font-size: 24px;
+  }
 }
 
-.site-index #owner-discription {
-  font-size: 18px;
+.site-index #company-title h1 {
+  line-height: 2rem;  
+}
+
+.site-index #owner-image {
+  width: 300px;
 }
