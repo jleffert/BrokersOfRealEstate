@@ -1,3 +1,7 @@
+/**************************************************
+  INDEX
+**************************************************/
+
 .site-index .homepage-house-container {
   overflow:hidden;
   height: 400px;
@@ -24,4 +28,14 @@
 
 .site-index #owner-image {
   width: 300px;
+}
+
+/**************************************************
+  CONTACT US
+**************************************************/
+
+/* Form */
+
+#new_contact_form textarea {
+  height: 300px;
 }
