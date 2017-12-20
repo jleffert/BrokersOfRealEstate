@@ -9,7 +9,7 @@
 
     <div class="form-group">
       <%= f.label :email, "Content*" %>
-      <%= f.text_area :message, as: :text, required: false, class: "form-control #{'is-invalid' if @contact_form.errors[:email].present?}" %>
+      <%= f.text_area :message, as: :text, required: false, class: "form-control" %>
     </div>
     <%= f.submit 'Send Email', class: 'btn btn-primary w-100' %>
   <% end %>

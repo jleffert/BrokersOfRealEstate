@@ -1,8 +1,6 @@
 =begin
   Code Credit: https://rubyplus.com/articles/3401-Customize-Field-Error-in-Rails-5
 =end
-  
-end
 
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
   html = ''
