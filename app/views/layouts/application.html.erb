@@ -9,6 +9,11 @@
   </head>
   <body class="<%= "#{controller_name}-#{action_name}" %>">
     <%= render 'layouts/nav_bar' %>
-    <%= yield %>
+    <div class="container-fluid">
+      <% flash.each do |key, value| %>
+            <%= content_tag :div, value, class: "text-center mt-2 #{alert_class(key)}" %>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>
