@@ -8,8 +8,8 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body class="<%= "#{controller_name}-#{action_name}" %>">
-    <%= render 'layouts/nav_bar' %>
-    <div class="container-fluid">
+    <%= render 'shared/nav_bar' %>
+    <div class="container-fluid px-0">
       <% flash.each do |key, value| %>
             <%= content_tag :div, value, class: "text-center mt-2 #{alert_class(key)}" %>
       <% end %>

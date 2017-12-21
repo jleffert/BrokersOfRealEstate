@@ -1,0 +1,30 @@
+<nav id="primary-nav" class="navbar navbar-expand-xl navbar-dark bg-primary">
+  <%= link_to 'Brokers of Real Estate', root_path, class: 'navbar-brand' %>
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#primary-nav-links" aria-controls="primary-nav-links" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- TODO: Logo? Possibly Nothing-->
+
+  <div class="collapse navbar-collapse" id="primary-nav-links">
+    <ul class="navbar-nav ml-auto mr-xl-5">
+      <%= content_tag :span, class: 'd-none d-xl-block' do %>
+        <%= render 'shared/contact_info' %>
+      <% end %>
+      <li class="nav-item">
+        <%= nav_link "Home", root_path %>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Houses for Sale</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About Us</a>
+      </li>
+      <li class="nav-item">
+        <%= nav_link "Contact Us", contact_us_path %>
+      </li>
+      <%= content_tag :span, class: 'd-flex flex-column d-xl-none' do %>
+        <%= render 'shared/contact_info' %>
+      <% end %>
+    </ul>
+  </div>
+</nav>
