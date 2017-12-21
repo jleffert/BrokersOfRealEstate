@@ -61,6 +61,15 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "BrokersOfRealEstate_#{Rails.env}"
   config.action_mailer.perform_caching = false
+  ActionMailer::Base.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 25,
+    domain: 'gmail.com',
+    user_name: 'jleffert9',
+    password: ENV['EMAIL_PASSWORD'],
+    authentication: :plain
+  }
+
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
