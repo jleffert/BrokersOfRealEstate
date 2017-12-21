@@ -28,6 +28,15 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.perform_deliveries = false
+  ActionMailer::Base.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 25,
+    domain: 'gmail.com',
+    user_name: 'jleffert9',
+    password: ENV['EMAIL_PASSWORD'],
+    authentication: :plain
+  }
 
   config.action_mailer.perform_caching = false
 

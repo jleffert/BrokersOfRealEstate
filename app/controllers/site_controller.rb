@@ -7,13 +7,18 @@ class SiteController < ApplicationController
   end
 
   def send_contact_form
-      @contact_form = ContactForm.new(contact_form_params)
+    @contact_form = ContactForm.new(contact_form_params)
 
-      if @contact_form.valid?
+    if @contact_form.valid?
+      ContactMailer.contact_email(email: @contact_form.email, message: @contact_form.message).deliver
 
-      else
-        render :contact_us
-      end
+      flash[:success] = 'Contact form sent!'
+      @contact_form = ContactForm.new
+
+      render :contact_us
+    else
+      render :contact_us
+    end
   end
 
   private
