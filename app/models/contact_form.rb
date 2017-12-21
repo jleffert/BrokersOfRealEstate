@@ -3,6 +3,7 @@ class ContactForm
 
   attr_accessor :email, :message
 
-  validates :email, presence: true
-  validates :message, presence: true
+  validates :email, :message, presence: true
+  validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
+  
 end
