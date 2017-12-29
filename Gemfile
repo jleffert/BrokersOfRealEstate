@@ -11,6 +11,9 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 gem 'bcrypt', '~> 3.1.7'
 
+#Ruby RETS
+gem 'mechanize'
+
 gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem 'jquery-rails', '~> 4.3.0'
 
