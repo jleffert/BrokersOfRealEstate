@@ -30,6 +30,14 @@
   width: 300px;
 }
 
+.site-index #owner-description {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
 /**************************************************
   CONTACT US
 **************************************************/
