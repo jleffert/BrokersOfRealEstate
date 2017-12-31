@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sub_type: MyString
+  address: MyString
+  zip: MyString
+  city: MyString
+  state: MyString
+  directions: MyString
+  list_price: 9.99
+  original_list_price: 9.99
+  square_footage: 1
+  lot_features: MyString
+  water_source: MyString
+  electric_provider: MyString
+  gas_provider: MyString
+  tax_amount: 1
+  tax_year: 1
+  disclaimer: MyString
+  picture_count: 
+  publish_to_internet: false
+  list_id: 1
+
+two:
+  sub_type: MyString
+  address: MyString
+  zip: MyString
+  city: MyString
+  state: MyString
+  directions: MyString
+  list_price: 9.99
+  original_list_price: 9.99
+  square_footage: 1
+  lot_features: MyString
+  water_source: MyString
+  electric_provider: MyString
+  gas_provider: MyString
+  tax_amount: 1
+  tax_year: 1
+  disclaimer: MyString
+  picture_count: 
+  publish_to_internet: false
+  list_id: 1
