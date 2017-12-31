@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category: MyString
+  width: 1
+  height: 1
+  house: one
+
+two:
+  category: MyString
+  width: 1
+  height: 1
+  house: two
