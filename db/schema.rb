@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171231033800) do
+ActiveRecord::Schema.define(version: 20180102052204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 20171231033800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lot_id"], name: "index_houses_on_lot_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "url"
+    t.integer "imageable_id"
+    t.string "imageable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
   create_table "lots", force: :cascade do |t|
@@ -53,6 +62,7 @@ ActiveRecord::Schema.define(version: 20171231033800) do
     t.integer "list_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "listing_rid", null: false
   end
 
   create_table "rooms", force: :cascade do |t|
