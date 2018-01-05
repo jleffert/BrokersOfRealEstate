@@ -71,7 +71,8 @@ module BORE
                               disclaimer: property['Disclaimer'],
                               picture_count: property['PhotosCount'],
                               publish_to_internet: property['InternetEntireListingDisplayYN'],
-                              list_id: property['ListingId'])
+                              list_id: property['ListingId'],
+                              listing_rid: property['ListingKeyNumeric'])
     end
 
     def self.build_house(property)
