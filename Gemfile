@@ -10,6 +10,8 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 gem 'bcrypt', '~> 3.1.7'
+gem 'delayed_job_active_record'
+gem 'daemons'
 
 #Ruby RETS
 gem 'mechanize'
