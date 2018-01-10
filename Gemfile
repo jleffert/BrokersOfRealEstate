@@ -27,6 +27,8 @@ gem 'font-awesome-rails'
 
 group :development, :test do
   gem 'capybara', '~> 2.13'
+  gem "better_errors"
+  gem "binding_of_caller"
   gem 'selenium-webdriver'
   gem 'pry'
 end
