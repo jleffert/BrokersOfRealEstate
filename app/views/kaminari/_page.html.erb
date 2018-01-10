@@ -1,0 +1,7 @@
+<% if page.current? %>
+  <%= content_tag :span, class: 'page-link disabled' do %><%= page %><% end %>
+<% else %>
+  <%= link_to page, url, { remote: remote, rel: page.rel, class: "page-link" } %>
+<% end %>
+
+<%#= link_to_unless page.current?, page, url, { remote: remote, rel: page.rel, class: "page#{' current' if page.current?} page-link" } %>
