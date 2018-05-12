@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.1.4'
+gem 'rails', '~> 5.2.0'
 gem 'pg'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
@@ -17,7 +17,7 @@ gem 'daemons'
 gem 'mechanize'
 gem 'aws-sdk-s3', '~> 1'
 
-gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'bootstrap', '~> 4.0.0.beta3'
 gem 'jquery-rails', '~> 4.3.0'
 gem 'kaminari'
 
@@ -30,7 +30,6 @@ group :development, :test do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'selenium-webdriver'
-  gem 'pry'
 end
 
 group :development do
@@ -38,6 +37,7 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'pry'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
