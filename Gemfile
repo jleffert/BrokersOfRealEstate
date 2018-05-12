@@ -17,7 +17,7 @@ gem 'daemons'
 gem 'mechanize'
 gem 'aws-sdk-s3', '~> 1'
 
-gem 'bootstrap', '~> 4.0.0.beta3'
+gem 'bootstrap', '~> 4.1.0'
 gem 'jquery-rails', '~> 4.3.0'
 gem 'kaminari'
 
