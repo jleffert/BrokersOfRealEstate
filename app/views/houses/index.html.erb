@@ -1,1 +1,37 @@
-<%= paginate @houses %>
+<div class="container">
+  <table class="table house-table">
+    <thead>
+      <th scope="col">Thumbnail</th>
+      <th scope="col">Address</th>
+      <th scope="col">Listing Price</th>
+      <th scope="col">Square Footage</th>
+      <th scope="col">Bed Rooms</th>
+    </thead>
+    <tbody>
+      <% @houses.each do |house| %>
+        <tr class="house-<%= house.id %>">
+          <td scope="row">
+            <%= link_to house_path(house) do %>
+              <% if house.images.first.present? %>
+                <%= image_tag house.images.first.url, class: "img-thumbnail" %></td>
+              <% else %>
+                <div class="img-thumbnail text-center">
+                  <i class="fa fa-home fa-lg"></i>
+                </div>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= house.lot.address %> <br />
+            <%= house.lot.city%>, <%= house.lot.state %> <%= house.lot.zip %>
+          </td>
+          <td><%= number_to_currency house.lot.list_price %></td>
+          <td><%= house.square_footage %></td>
+          <td><%= house.rooms.bedrooms.count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @houses %>
+</div>
