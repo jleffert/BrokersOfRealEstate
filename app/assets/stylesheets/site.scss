@@ -2,40 +2,43 @@
   INDEX
 **************************************************/
 
-.site-index .homepage-house-container {
-  overflow:hidden;
-  height: 400px;
-}
+.site-index {
+  .homepage-house-container {
+    overflow:hidden;
+    height: 400px;
+  }
 
-.site-index #homepage-house {
-  position: relative;
-  bottom: 255px;
+  #homepage-house {
+    max-height: 500px;
+  }
+
+  #company-title h1 {
+    line-height: 2rem;  
+  }
+
+  #owner-description {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
 
   @media (max-width: 992px) { 
-    bottom: 152px;
+    #quick-action a.btn {
+      font-size: 24px;
+    }
+
+    #owner-image {
+      width: 300px;
+    }
   }
-}
 
-@media (max-width: 992px) { 
-  #quick-action a.btn {
-    font-size: 24px;
+  @media (min-width: 993px) {
+    #owner-image {
+      height: 500px;
+    }
   }
-}
-
-.site-index #company-title h1 {
-  line-height: 2rem;  
-}
-
-.site-index #owner-image {
-  width: 300px;
-}
-
-.site-index #owner-description {
-  display: flex;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
 }
 
 /**************************************************

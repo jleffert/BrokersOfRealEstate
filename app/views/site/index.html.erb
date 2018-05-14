@@ -1,23 +1,9 @@
-<div class="homepage-house-container">
-  <%= image_tag 'https://s3.amazonaws.com/brokersofrealestate/homepage-house.jpg', id: 'homepage-house', class: 'w-100' %>
-</div>
-
 <div class="container">
-  <div class="row mt-4">
-    <div class="col-xs-12 w-100">
-      <div id="quick-action" class="d-flex justify-content-around bd-highlight">
-          <div class="p-2 bd-highlight"><%= link_to 'Houses for Sale', houses_path, class: 'btn btn-outline-primary' %></div>
-          <div class="p-2 bd-highlight"><%= link_to 'Search for Houses', '#', class: 'btn btn-outline-primary' %></div>
-          <div class="p-2 bd-highlight"><%= link_to 'Contact Us', contact_us_path, class: 'btn btn-outline-primary' %></div>
-        </div>
-    </div>
-  </div>
-
   <div class="row mt-4">
     <div id="company-title" class="col-xs-12 text-center w-100">
       <h1>Brokers of Real Estate</h1>
       <h2>Steven Leffert</h2>
-      <%= content_tag :h4, class: 'd-flex flex-column' do %>
+      <%= content_tag :h4, class: 'd-flex flex-column flex-md-row justify-content-md-around' do %>
         <%= render 'shared/contact_info' %>
         <%= link_to "https://www.facebook.com/BrokersofRealEstate/", class: "navbar-text" do %>
           <i class="fa fa-facebook-square" aria-hidden="true"></i>
@@ -26,9 +12,19 @@
       <% end %>
     </div>
   </div>
+  <div class="row mt-4">
+    <div class="col-xs-12 w-100">
+      <div id="quick-action" class="d-flex flex-column flex-md-row justify-content-md-around bd-highlight text-center">
+          <div class="p-2 bd-highlight"><%= link_to 'List My House', contact_us_path, class: 'btn btn-outline-primary' %></div>
+          <div class="p-2 bd-highlight"><%= link_to 'Houses for Sale', houses_path, class: 'btn btn-outline-primary' %></div>
+          <div class="p-2 bd-highlight"><%= link_to 'Search for Houses', '#', class: 'btn btn-outline-primary' %></div>
+          <div class="p-2 bd-highlight"><%= link_to 'Contact Us', contact_us_path, class: 'btn btn-outline-primary' %></div>
+        </div>
+    </div>
+  </div>
   <div class="row mt-3">
     <div class="col-lg-6 col-sm-12 display-block w-100">
-        <%= image_tag 'https://s3.amazonaws.com/brokersofrealestate/steve-leffert-image.jpg', id: "owner-image", class: 'd-block mx-auto' %>
+        <%= image_tag 'https://s3.amazonaws.com/brokersofrealestate/steve-leffert-image.jpg', id: "owner-image", class: 'd-block mx-auto img-fluid' %>
     </div>
     <div id="owner-description" class="col-lg-6 col-xs-12 display-block mt-5 mt-lg-0 w-100">
         <p>Lorem ipsum dolor sit amet, ut qui malorum mandamus. Mea an sale theophrastus. Ne est mundi accusamus scribentur. Nec solum maiorum epicuri ei, qui affert instructior ex, ex mea debet theophrastus.Timeam mandamus corrumpit eu his, fabellas inimicus id eam, ei alia accusata qui. Vitae postea torquatos in eos, idque dicat omittam no nec, homero partem essent ea vix. Mei ea saepe eripuit consequuntur. Has ad nominati forensibus. Detracto suscipit eu qui.</p>
