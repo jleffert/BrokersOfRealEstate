@@ -1,0 +1,190 @@
+<div class="mx-3 mx-lg-5 mt-3">  
+  <h2><%= "#{@house.address} - #{number_to_currency @house.lot.list_price}" %></h2>
+  <div id="house-carousel" class="carousel slide container" data-ride="carousel" data-interval="false">
+    <div class="carousel-inner">
+      <% images = @house.images.order(:created_at).to_a  %>
+      <% if images.present? %>
+        <div class="carousel-item active">
+          <%= image_tag images.shift.url, class: "d-block w-100", alt: "Picture of Home" %>
+        </div>
+
+        <% images.each do |image| %>
+          <div class="carousel-item">
+            <%= image_tag image.url, class: "d-block w-100", alt: "Picture of Home" %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="carousel-item active">
+          <%= image_tag "https://s3.amazonaws.com/brokersofrealestate/not-available.jpg", class: "img-fluid w-auto m-auto d-block h-100", alt: "Image Unavailable" %>
+        </div>
+      <% end %>
+    </div>
+    <a class="carousel-control-prev" href="#house-carousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#house-carousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+  <% if @house.images.present? and @house.images.count > 1 %>
+    <div class="thumbnail-carousel w-100 my-3">
+      <span>
+        <% @house.images.order(:created_at).each_with_index do |image, i| %>
+          <%= image_tag image.url, class: "img-thumbnail", data: { index: i } %>
+        <% end %>
+      </span>
+    </div>
+
+    <%= javascript_tag do %>
+      $(".thumbnail-carousel span img").click(function() {
+       $("#house-carousel").carousel($(this).data("index"));
+      })
+    <% end %>
+  <% end %>
+  <div class="card mt-3" id="house-info">
+    <div class="card-header d-flex justify-content-around w-100">
+      <span>Price: <%= number_to_currency @house.lot.list_price %></span>
+      <span>Bedrooms: <%= @house.total_bedrooms %></span>
+      <span>Bathrooms: <%= @house.total_bathrooms %></span>
+    </div>
+    <div class="card-body">
+      <% if @house.directions.present? %>
+        <h3 class="card-title">Directions</h3>
+        <p class="card-text"><%= @house.directions %></p>
+      <% end %>
+      <div class="house-icon-stats row w-100">
+        <span class="col-sm-4 col-lg-2 offset-lg-1 col- d-flex align-items-start mb-3 mb-sm-0">
+          <i class="fa fa-md fa-thermometer-full align-self-center mr-2 ml-auto ml-auto" aria-hidden="true"></i>
+          <p class="align-self-center text-center mr-auto mb-0">
+            <strong class="d-block">Cooling</strong>
+            <%= humanize_abbreviated_list(House::COOLING.stringify_keys, @house.cooling) %>
+          </p>
+        </span>
+        <span class="col-sm-4 col-lg-2 d-flex align-items-start mb-3 mb-sm-0">
+          <i class="fa fa-md fa-thermometer-empty align-self-center mr-2 ml-auto" aria-hidden="true"></i>
+          <p class="align-self-center text-center mr-auto mb-0">
+            <strong class="d-block">Heating</strong>
+            <%= humanize_abbreviated_list(House::HEATING.stringify_keys, @house.heating) %>
+          </p>
+        </span>
+        <% if @house.lot_square_footage > 0 %>
+          <span class="col-sm-4 col-lg-2 d-flex align-items-start mb-3 mb-sm-0">
+            <i class="fa fa-md fa-square-o align-self-center mr-2 ml-auto" aria-hidden="true"></i>
+            <p class="align-self-center text-center mr-auto mb-0">
+              <strong class="d-block">Lot Square Footage</strong>
+              <%= number_with_delimiter(@house.lot_square_footage, delimiter: ',') %>
+            </p>
+          </span>
+        <% end %>
+        <span class="col-sm-6 col-lg-2 d-flex align-items-start mb-3 mb-sm-0">
+          <i class="fa fa-md fa-home align-self-center mr-2 ml-auto" aria-hidden="true"></i>
+          <p class="align-self-center text-center mr-auto mb-0">
+            <strong class="d-block">Home Square Footage</strong>
+            <%= number_with_delimiter(@house.square_footage, delimiter: ',') %>
+          </p>
+        </span>
+        <span class="col-sm-6  col-lg-2 d-flex align-items-start mb-3 mb-sm-0">
+         <i class="fa fa-md fa-calendar align-self-center mr-2 ml-auto" aria-hidden="true"></i>
+         <p class="align-self-center text-center mr-auto mb-0">
+           <strong class="d-block">Year Built</strong>
+           <%= @house.year_built %>
+         </p>
+        </span>
+      </div>
+      <div class="row mt-3">
+        <div class="col-4">
+          <div class="list-group house-list-group-buttons" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#list-home-interior" role="tab" aria-controls="interior">Interior</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-home-rooms" role="tab" aria-controls="rooms">Rooms</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-home-exterior" role="tab" aria-controls="exterior">Exterior</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Misc</a>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="list-home-interior" role="tabpanel" aria-labelledby="list-home-list">
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <h4>Interior Features</h4>
+                    <ul>
+                      <% @house.interior_features.split(',').each do |feature| %>
+                        <% if House::INTERIOR_FEATURES.stringify_keys[feature].present? %>
+                          <li><%= House::INTERIOR_FEATURES.stringify_keys[feature] %></li>
+                        <% end %>
+                      <% end %>
+                    </ul>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <h4>Appliances</h4>
+                    <ul>
+                      <% @house.appliances.split(',').each do |appliance| %>
+                        <% if House::APPLIANCES.stringify_keys[appliance].present? %>
+                          <li><%= House::APPLIANCES.stringify_keys[appliance] %></li>
+                        <% else %>
+                          <li><%= appliance %></li>
+                        <% end %>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="list-home-rooms" role="tabpanel" aria-labelledby="list-messages-list">
+              <ul>
+                <h4>Rooms</h4>
+                <% @house.rooms.order(created_at: :asc).each do |room| %>
+                  <li><%= room.label %></li>
+                <% end %>
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="list-home-exterior" role="tabpanel" aria-labelledby="list-home-exterior">
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <h4>Exterior</h4>
+                  <ul>
+                    <% @house.exterior.split(',').each do |exterior| %>
+                      <% if House::EXTERIOR.stringify_keys[exterior].present? %>
+                        <li><%= House::EXTERIOR.stringify_keys[exterior] %></li>
+                      <% else %>
+                        <li><%= exterior %></li>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </div>
+                <div class="col-12 col-md-6">
+                  <h4>Exterior Features</h4>
+                  <ul>
+                    <% @house.exterior_features.split(',').each do |feature| %>
+                      <% if House::EXTERIOR_FEATURES.stringify_keys[feature].present? %>
+                        <li><%= House::EXTERIOR_FEATURES.stringify_keys[feature] %></li>
+                      <% else %>
+                        <li><%= feature %></li>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <h4 class="text-center">Misc Features</h4>
+                  <ul>
+                    <% @house.misc_features.split(',').each do |feature| %>
+                      <% if House::MISC_FEATURES.stringify_keys[feature].present? %>
+                       <li><%= House::MISC_FEATURES.stringify_keys[feature] %></li>
+                      <% else %>
+                        <li><%= feature %></li>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>

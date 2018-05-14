@@ -1,3 +1,49 @@
+/* Index */
+
 #house-table {
   width: 75%;
+}
+
+/* Show */
+
+#house-carousel {
+  background-color: black;
+}
+
+/* Show */
+
+.houses-show {
+
+  #house-info {
+    font-size: 20px;
+  }
+
+  .house-icon-stats p {
+    width: 150px;
+    max-width: 150px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 959px) {
+    .house-list-group-buttons {
+      font-size: 16px;
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-width: 605px) {
+    #list-home-rooms ul {
+      padding-left: 0px;
+    }
+  }
+}
+
+.thumbnail-carousel {
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 100px;
+
+  span {
+    white-space: nowrap;
+  }
 }
