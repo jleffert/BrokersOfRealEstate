@@ -1,7 +1,7 @@
 module BORE
   class SyncProperties
     ROOMS = ['MasterBedroom', '2ndBedroom', '3rdBedroom', '4thBedroom', 'FamilyRoom', 'FormalDiningRoom', 'GreatRoom', 
-             'InformalDiningRoom', 'Kitchen', 'LaundryRoom', 'LivingRoom', 'Office', 'RecreationRoom']
+             'InformalDiningRoom', 'Kitchen', 'LaundryRoom', 'LivingRoom', 'Office', 'RecreationRoom', '2ndKitchen']
     
     def self.initial_import
       rets = RubyRETS::RETS.new(ENV["RETS_USER_ID"], ENV["RETS_PASSWORD"], ENV["RETS_USER_AGENT"], 'http://rets172lax.raprets.com:6103')
@@ -27,7 +27,7 @@ module BORE
           ROOMS.each do |room|
             room_hash = property.select{|key, hash| key.include? room }
             if room_hash["#{room}Area"] != "0"
-              room = build_room(house, room, room_hash)
+              room = build_room(house, room, room_hash.merge("description": property[House::ROOM_NAMES.stringify_keys[room]]).stringify_keys)
               room.save
               rooms << room
             end
@@ -70,11 +70,16 @@ module BORE
               picture_count: property['PictureCount'],
               publish_to_internet: property['PublishToInternet'],
               list_id: property['EnteredByMLSID'],
-              listing_rid: property['ListingRid'])
+              listing_rid: property['ListingRid'],
+              school_1: "#{property['SchoolName1']}, #{property['SchoolType1']}",
+              school_2: "#{property['SchoolName2']}, #{property['SchoolType2']}",
+              school_3: "#{property['SchoolName3']}, #{property['SchoolType3']}",
+              school_4: "#{property['SchoolName4']}, #{property['SchoolType4']}")
     end
 
     def self.build_house(property)
       House.new(square_footage: property['SquareFootage'],
+                description: property['MarketingRemarks'],
                 total_bedrooms: property['Bedrooms'],
                 total_bathrooms: property['Bathrooms'],
                 appliances: property['RESIAPPL'],
@@ -84,11 +89,14 @@ module BORE
                 cooling: property['RESICOOL'],
                 heating: property['RESIHEAT'],
                 foundation: property['RESIFOUD'],
-                year_built: property['RESIYEAR'])
+                year_built: property['RESIYEAR'],
+                exterior: property['RESIEXTE'],
+                exterior_features: property['RESIEXTR'],
+                misc_features: property['RESIMISC'])
     end
 
     def self.build_room(house, room_string, room_hash)
-      house.rooms.new(category: room_string, width: room_hash["#{room_string}Wid"], length: room_hash["#{room_string}Len"])
+      house.rooms.new(category: room_string, width: room_hash["#{room_string}Wid"], length: room_hash["#{room_string}Len"], description: room_hash["description"])
     end
   end
 end
