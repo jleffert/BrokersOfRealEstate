@@ -11,13 +11,34 @@ module BORE
 
           s3 = Aws::S3::Resource.new(region:'us-east-1')
           bucket = s3.bucket('brokersofrealestate')
-          response.parsed.each do |image|
-            File.rename(image[:data].path, "#{image[:data].path}.jpg")
-            image = Image.create(imageable_type: 'Lot', imageable_id: lot.id, url: "#{image[:data].path}.jpg")
-            image.upload_to_s3
+          begin
+            response.parsed.each do |image|
+              File.rename(image[:data].path, "#{image[:data].path}.jpg")
+              image = Image.create(imageable_type: 'Lot', imageable_id: lot.id, url: "#{image[:data].path}.jpg")
+              image.upload_to_s3
+            end
+          rescue *NET_HTTP_RESCUES => e
+            puts "ERROR: LOT => #{lot.id}"
+            puts "EXCEPTION: #{e}"
           end
         end
       end
     end
+
+    NET_HTTP_RESCUES = [ Errno::EINVAL,
+      Errno::ECONNRESET,
+      EOFError,
+      Net::HTTPBadResponse,
+      Net::HTTPHeaderSyntaxError,
+      Net::ProtocolError,
+      Net::OpenTimeout,
+      Net::HTTPServerException,
+      Net::HTTPFatalError,
+      Mechanize::ResponseCodeError,
+      OpenSSL::SSL::SSLError,
+      Errno::EHOSTUNREACH,
+      Mechanize::Error,
+      Net::HTTP::Persistent::Error,
+      Net::HTTPRetriableError ]
   end
 end
