@@ -22,6 +22,7 @@ gem 'jquery-rails', '~> 4.3.0'
 gem 'kaminari'
 
 gem 'font-awesome-rails'
+gem 'simple_form'
 
 # gem 'capistrano-rails', group: :development
 
