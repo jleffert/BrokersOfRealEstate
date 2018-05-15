@@ -1,3 +1,4 @@
+
 /*************************************
   Base
 *************************************/
@@ -5,13 +6,6 @@
 html, body {
   height: 100%;
   font-family: 'Tangerine';
-}
-
-/* md */
-@media (max-width: 992px) {
-    p {
-        font-size: 24px;
-    }
 }
 
 body > .container-fluid {
