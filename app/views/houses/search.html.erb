@@ -1,0 +1,18 @@
+<div class="mx-3 mx-lg-5 mt-3">  
+  <%= simple_form_for :search, url: results_houses_path do |f| %>
+    <%= f.input :street, as: :string, required: false %>
+    <%= f.input :zipcode, as: :numeric, required: false %>
+    <div class="row">
+      <div class="col-6">
+        <%= f.input :minimum_price, as: :numeric, required: false %>
+      </div>
+      <div class="col-6">
+        <%= f.input :maximum_price, as: :numeric, required: false %>
+      </div>
+    </div>
+    <%= f.input :number_of_rooms, collection: 1..10, required: false %>
+    <%= f.input :number_of_bathrooms, collection: 1..10, required: false %>
+
+    <%= f.submit "Search", class: "btn btn-primary w-100" %>
+  <% end %>
+</div>

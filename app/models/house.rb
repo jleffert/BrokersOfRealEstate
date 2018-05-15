@@ -19,6 +19,17 @@ class House < ApplicationRecord
     lot.square_footage
   end
 
+  def self.build_search_query(search_params)
+    query = House.joins(:lot)
+    query = query.where(lot_table[:list_price].gteq(search_params[:minimum_price])) if search_params[:minimum_price].present?
+    query = query.where(lot_table[:list_price].lteq(search_params[:maximum_price])) if search_params[:maximum_price].present?
+    query = query.where(lot_table[:address].matches("%#{search_params[:street].strip}%")) if search_params[:street].present?
+    query = query.where(lot_table[:zipcode].matches("%#{search_params[:zipcode].strip}%")) if search_params[:zipcode].present?
+    query = query.where(house_table[:total_bedrooms].eq(search_params[:number_of_rooms])) if search_params[:number_of_rooms].present?
+    query = query.where(house_table[:total_bathrooms].eq(search_params[:number_of_bathrooms])) if search_params[:number_of_bathrooms].present?
+    query
+  end
+
   ROOM_NAMES = {
     "MasterBedroom": "RESIMAST",
     "2ndBedroom": "RESI2NDB",
@@ -120,4 +131,13 @@ class House < ApplicationRecord
     "ELEC": "Electric",
     "NGAS": "Natural Gas"
   }
+
+  private
+  def self.house_table
+    House.arel_table
+  end
+
+  def self.lot_table
+    Lot.arel_table
+  end
 end
