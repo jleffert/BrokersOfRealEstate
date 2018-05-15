@@ -1,7 +1,7 @@
 /* Index */
 
-#house-table {
-  width: 75%;
+.house-table {
+  table-layout: fixed;
 }
 
 /* Show */
@@ -14,7 +14,7 @@
 
 .houses-show {
 
-  #house-info {
+  #house-info .card-text {
     font-size: 20px;
   }
 
