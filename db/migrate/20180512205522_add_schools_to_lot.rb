@@ -1,4 +1,4 @@
-class AddSchoolsToLot < ActiveRecord::Migration[5.2]
+class AddSchoolsToLot < ActiveRecord::Migration[5.1]
   def change
     add_column :lots, :school_1, :string, before: :created_at
     add_column :lots, :school_2, :string, before: :created_at
