@@ -4,44 +4,75 @@ module BORE
              'InformalDiningRoom', 'Kitchen', 'LaundryRoom', 'LivingRoom', 'Office', 'RecreationRoom', '2ndKitchen']
     
     def self.initial_import
-      rets = RubyRETS::RETS.new(ENV["RETS_USER_ID"], ENV["RETS_PASSWORD"], ENV["RETS_USER_AGENT"], 'http://rets172lax.raprets.com:6103')
-      response = rets.login('/Midlands/MIDL/login.aspx')
+      rets_session = login_to_rets
 
-      unless response == RubyRETS::Unauthorized
-        properties = rets.search('Property', 'RESI','(City=|Lincoln),(Status=|A)', '/Midlands/MIDL/search.aspx', {standard_names: 0})
+      unless rets_session[:response] == RubyRETS::Unauthorized
+        properties = rets_session[:rets].search('Property', 'RESI','(City=|Lincoln),(Status=|A)', '/Midlands/MIDL/search.aspx', { standard_names: 0 })
         Room.delete_all
         House.delete_all
         Lot.delete_all
-        lots = []
-        houses = []
-        rooms = []
-
-        properties.parsed.each do |property|
-          lot = build_lot(property)
-          lot.save
-
-          house = build_house(property)
-          house.lot_id = lot.id
-          house.save
-
-          ROOMS.each do |room|
-            room_hash = property.select{|key, hash| key.include? room }
-            if room_hash["#{room}Area"] != "0"
-              room = build_room(house, room, room_hash.merge("description": property[House::ROOM_NAMES.stringify_keys[room]]).stringify_keys)
-              room.save
-              rooms << room
-            end
-          end
-
-          lots << lot
-          houses << house
-        end
+        results = parse_response(properties)
+        return results
+      else
+        raise RubyRETS::Unauthorized
       end
+    end
 
-      return lots, houses, rooms
+    def self.sync
+      rets_session = login_to_rets
+
+      unless rets_session[:response] == RubyRETS::Unauthorized
+        properties = rets_session[:rets].search('Property', 
+                                                'RESI',
+                                                "(City=|Lincoln),(Status=|A),(ListingRid=1+),(LastModifiedDateTime=#{Lot.order(:updated_at => 'DESC').first.updated_at.strftime("%Y-%m-%dT%H:%M:%S")}+)",
+                                                '/Midlands/MIDL/search.aspx',
+                                                {
+                                                  standard_names: 0
+                                                })
+        results = parse_response(properties)
+        return results
+      else
+        raise RubyRETS::Unauthorized
+      end
     end
 
     private_class_method
+
+    def self.login_to_rets
+      rets = RubyRETS::RETS.new(ENV["RETS_USER_ID"], ENV["RETS_PASSWORD"], ENV["RETS_USER_AGENT"], 'http://rets172lax.raprets.com:6103')
+      response = rets.login('/Midlands/MIDL/login.aspx')
+      return { response: response, rets: rets }
+    end
+
+    def self.parse_response(properties)
+      binding.pry
+      lots = []
+      houses = []
+      rooms = []
+
+      properties.parsed.each do |property|
+        lot = build_lot(property)
+        lot.save
+
+        house = build_house(property)
+        house.lot_id = lot.id
+        house.save
+
+        ROOMS.each do |room|
+          room_hash = property.select{|key, hash| key.include? room }
+          if room_hash["#{room}Area"] != "0"
+            room = build_room(house, room, room_hash.merge("description": property[House::ROOM_NAMES.stringify_keys[room]]).stringify_keys)
+            room.save
+            rooms << room
+          end
+        end
+
+        lots << lot
+        houses << house
+      end
+      return lots, houses, rooms
+    end 
+
     def self.build_address(property)
       address = property['StreetNumber']
       address = "#{address} #{property['StreetDirection']}" if property['StreetDirPrefix'].present?
