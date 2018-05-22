@@ -17,7 +17,7 @@ module BORE
               response.parsed.each do |image|
                 File.rename(image[:data].path, "#{image[:data].path}.jpg")
                 image = Image.create(imageable_type: 'Lot', imageable_id: lot.id, url: "#{image[:data].path}.jpg")
-                #image.upload_to_s3
+                image.upload_to_s3
               end
             rescue *NET_HTTP_RESCUES => e
               puts "ERROR: LOT => #{lot.id}"
