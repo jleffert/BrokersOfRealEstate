@@ -1,7 +1,7 @@
 class House < ApplicationRecord
   paginates_per 25
   belongs_to :lot
-  has_many :rooms
+  has_many :rooms, dependent: :destroy
 
   def images
     lot.images

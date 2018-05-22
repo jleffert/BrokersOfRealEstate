@@ -9,6 +9,7 @@ module BORE
       unless rets_session[:response] == RubyRETS::Unauthorized
         properties = rets_session[:rets].search('Property', 'RESI','(City=|Lincoln),(Status=|A)', '/Midlands/MIDL/search.aspx', { standard_names: 0 })
         results = parse_response(properties)
+        Lot.where.not(listing_rid: results[3]).destroy_all
         return results
       else
         raise RubyRETS::Unauthorized
@@ -47,6 +48,7 @@ module BORE
       lots = []
       houses = []
       rooms = []
+      listing_rids = []
 
       properties.parsed.each do |property|
         lot = Lot.where(listing_rid: property['ListingRid']).first || Lot.new
@@ -69,9 +71,10 @@ module BORE
 
         lots << lot
         houses << house
+        listing_rids << lot.listing_rid
       end
 
-      return lots, houses, rooms
+      return lots, houses, rooms, listing_rids
     end 
 
     def self.build_address(property)

@@ -1,5 +1,5 @@
 class Lot < ApplicationRecord
-  has_one :house
+  has_one :house, dependent: :destroy
   has_many :images, as: :imageable, dependent: :destroy
 
   LOT_FEATURES = {
