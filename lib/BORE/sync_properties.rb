@@ -57,11 +57,11 @@ module BORE
         house = build_house(house, property)
         house.save
 
-        house.rooms.destroy_all
-        ROOMS.each do |room|
-          room_hash = property.select{|key, hash| key.include? room }
-          if room_hash["#{room}Area"] != "0"
-            room = build_room(house, room, room_hash.merge("description": property[House::ROOM_NAMES.stringify_keys[room]]).stringify_keys)
+        ROOMS.each do |room_string|
+          room_hash = property.select{|key, hash| key.include? room_string }
+          if room_hash["#{room_string}Area"] != "0"
+            room = house.rooms.where(category: room_string).first || house.rooms.build
+            room = build_room(house, room, room_string, room_hash.merge("description": property[House::ROOM_NAMES.stringify_keys[room]]).stringify_keys)
             room.save
             rooms << room
           end
@@ -129,8 +129,9 @@ module BORE
       house
     end
 
-    def self.build_room(house, room_string, room_hash)
-      house.rooms.new(category: room_string, width: room_hash["#{room_string}Wid"], length: room_hash["#{room_string}Len"], description: room_hash["description"])
+    def self.build_room(house, room, room_string, room_hash)
+      room.update_attributes(category: room_string, width: room_hash["#{room_string}Wid"], length: room_hash["#{room_string}Len"], description: room_hash["description"])
+      room
     end
   end
 end
