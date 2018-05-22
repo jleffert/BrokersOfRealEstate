@@ -3,14 +3,11 @@ module BORE
     ROOMS = ['MasterBedroom', '2ndBedroom', '3rdBedroom', '4thBedroom', 'FamilyRoom', 'FormalDiningRoom', 'GreatRoom', 
              'InformalDiningRoom', 'Kitchen', 'LaundryRoom', 'LivingRoom', 'Office', 'RecreationRoom', '2ndKitchen']
     
-    def self.initial_import
+    def self.import
       rets_session = login_to_rets
 
       unless rets_session[:response] == RubyRETS::Unauthorized
         properties = rets_session[:rets].search('Property', 'RESI','(City=|Lincoln),(Status=|A)', '/Midlands/MIDL/search.aspx', { standard_names: 0 })
-        Room.delete_all
-        House.delete_all
-        Lot.delete_all
         results = parse_response(properties)
         return results
       else
@@ -27,7 +24,9 @@ module BORE
                                                 "(City=|Lincoln),(Status=|A),(ListingRid=1+),(LastModifiedDateTime=#{Lot.order(:updated_at => 'DESC').first.updated_at.strftime("%Y-%m-%dT%H:%M:%S")}+)",
                                                 '/Midlands/MIDL/search.aspx',
                                                 {
-                                                  standard_names: 0
+                                                  standard_names: 0,
+                                                  limit: 'NONE',
+                                                  count: 1
                                                 })
         results = parse_response(properties)
         return results
@@ -45,19 +44,20 @@ module BORE
     end
 
     def self.parse_response(properties)
-      binding.pry
       lots = []
       houses = []
       rooms = []
 
       properties.parsed.each do |property|
-        lot = build_lot(property)
+        lot = Lot.where(listing_rid: property['ListingRid']).first || Lot.new
+        lot = build_lot(lot, property)
         lot.save
 
-        house = build_house(property)
-        house.lot_id = lot.id
+        house = lot.house || lot.build_house
+        house = build_house(house, property)
         house.save
 
+        house.rooms.destroy_all
         ROOMS.each do |room|
           room_hash = property.select{|key, hash| key.include? room }
           if room_hash["#{room}Area"] != "0"
@@ -70,6 +70,7 @@ module BORE
         lots << lot
         houses << house
       end
+
       return lots, houses, rooms
     end 
 
@@ -83,9 +84,9 @@ module BORE
       address
     end
 
-    def self.build_lot(property)
+    def self.build_lot(lot, property)
       # Gas, City, and Water source are only retured when selecting Lots for sale
-      Lot.new(sub_type: property.fetch('PropertySubtype1'),
+      lot.update_attributes(sub_type: property.fetch('PropertySubtype1'),
               address: build_address(property),
               zip: property['ZipCode'],
               city: property['City'],
@@ -106,10 +107,11 @@ module BORE
               school_2: "#{property['SchoolName2']}, #{property['SchoolType2']}",
               school_3: "#{property['SchoolName3']}, #{property['SchoolType3']}",
               school_4: "#{property['SchoolName4']}, #{property['SchoolType4']}")
+    lot
     end
 
-    def self.build_house(property)
-      House.new(square_footage: property['SquareFootage'],
+    def self.build_house(house, property)
+      house.update_attributes(square_footage: property['SquareFootage'],
                 description: property['MarketingRemarks'],
                 total_bedrooms: property['Bedrooms'],
                 total_bathrooms: property['Bathrooms'],
@@ -124,6 +126,7 @@ module BORE
                 exterior: property['RESIEXTE'],
                 exterior_features: property['RESIEXTR'],
                 misc_features: property['RESIMISC'])
+      house
     end
 
     def self.build_room(house, room_string, room_hash)
