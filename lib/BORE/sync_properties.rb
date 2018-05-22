@@ -7,7 +7,7 @@ module BORE
       rets_session = login_to_rets
 
       unless rets_session[:response] == RubyRETS::Unauthorized
-        properties = rets_session[:rets].search('Property', 'RESI','(City=|Lincoln),(Status=|A)', '/Midlands/MIDL/search.aspx', { standard_names: 0 })
+        properties = rets_session[:rets].search('Property', 'RESI','(City=|Lincoln),(Status=|A),(PublishToInternet=1)', '/Midlands/MIDL/search.aspx', { standard_names: 0 })
         results = parse_response(properties)
         Lot.where.not(listing_rid: results[3]).destroy_all
         return results
