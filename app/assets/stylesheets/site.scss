@@ -13,7 +13,13 @@
   }
 
   #company-title h1 {
-    line-height: 2rem;  
+    line-height: 2rem;
+  }
+
+  @media (max-width: 576px) { 
+    #home-page-contact-info a {
+      font-size: 19px;
+    }
   }
 
   #owner-description {
@@ -22,13 +28,12 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+    p {
+      font-size: 22px;
+    }
   }
 
   @media (max-width: 992px) { 
-    #quick-action a.btn {
-      font-size: 24px;
-    }
-
     #owner-image {
       width: 300px;
     }

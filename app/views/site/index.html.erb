@@ -2,8 +2,7 @@
   <div class="row mt-4">
     <div id="company-title" class="col-xs-12 text-center w-100">
       <h1>Brokers of Real Estate</h1>
-      <h2>Steven Leffert</h2>
-      <%= content_tag :h4, class: 'd-flex flex-column flex-md-row justify-content-md-around' do %>
+      <%= content_tag :h4, class: 'd-flex flex-column flex-lg-row justify-content-md-around', id: 'home-page-contact-info' do %>
         <%= render 'shared/contact_info' %>
         <%= link_to "https://www.facebook.com/BrokersofRealEstate/", class: "navbar-text" do %>
           <i class="fa fa-facebook-square" aria-hidden="true"></i>
@@ -15,21 +14,24 @@
   <div class="row mt-4">
     <div class="col-xs-12 w-100">
       <div id="quick-action" class="d-flex flex-column flex-md-row justify-content-md-around bd-highlight text-center">
-          <div class="p-2 bd-highlight"><%= link_to 'List My House', contact_us_path, class: 'btn btn-outline-primary' %></div>
-          <div class="p-2 bd-highlight"><%= link_to 'Houses for Sale', houses_path, class: 'btn btn-outline-primary' %></div>
-          <div class="p-2 bd-highlight"><%= link_to 'Search for Houses', search_houses_path, class: 'btn btn-outline-primary' %></div>
-          <div class="p-2 bd-highlight"><%= link_to 'Contact Us', contact_us_path, class: 'btn btn-outline-primary' %></div>
+          <div class="p-1 p-lg-2 bd-highlight"><%= link_to 'List My House', contact_us_path, class: 'btn btn-outline-primary' %></div>
+          <div class="p-1 p-lg-2 bd-highlight"><%= link_to 'Houses for Sale', houses_path, class: 'btn btn-outline-primary' %></div>
+          <div class="p-1 p-lg-2 bd-highlight"><%= link_to 'Search for Houses', search_houses_path, class: 'btn btn-outline-primary' %></div>
+          <div class="p-1 p-lg-2 bd-highlight"><%= link_to 'Contact Us', contact_us_path, class: 'btn btn-outline-primary' %></div>
         </div>
     </div>
   </div>
   <div class="row mt-3">
+    <div class="col-12 text-center">
+      <h2>Steven Leffert</h2>
+    </div>
     <div class="col-lg-6 col-sm-12 display-block w-100">
         <%= image_tag 'https://s3.amazonaws.com/brokersofrealestate/steve-leffert-image.jpg', id: "owner-image", class: 'd-block mx-auto img-fluid' %>
     </div>
     <div id="owner-description" class="col-lg-6 col-xs-12 display-block mt-5 mt-lg-0 w-100">
-        <p>Brokers of Real Estate is owned and managed by Steven Leffert.  Steve is a local man, who graduated from Lincoln East highschool in 1979.  He started working locally as a realtor in 2000, and brings 18 years of experience to the table.  He can find you the perfect home, or help you sell your house.</p>
+        <p>Brokers of Real Estate is based out of Lincoln Nebraska.  It's owned and managed by Steven Leffert.  Steve is a local man, who graduated from Lincoln East High School in 1979.  He started working as a realtor in 2000, and brings 18 years of local experience to the table.  He can find you the perfect home, or help you sell your house.</p>
 
-        <p>If you have any questions or requests, please call Steve at <%= link_to '(402) 416-1775', 'tel:1-402-416-1775' %> or <%= link_to 'LeffertRealEstate@gmail.com', 'mailto:LeffertRealEstate@gmail.com' %></p>
+        <p>If you have any questions or requests, please call Steve at <%= link_to '(402) 416-1775', 'tel:1-402-416-1775' %> or <%= link_to 'LeffertRealEstate@gmail.com', 'mailto:LeffertRealEstate@gmail.com' %>.  You can also email Steve directly from this website <%= link_to 'Here', contact_us_path %>.</p>
     </div>
   </div>
 </div>
